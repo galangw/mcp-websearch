@@ -1,0 +1,37 @@
+{
+  "name": "mcp-websearch-server",
+  "version": "1.0.0",
+  "description": "MCP Server for web search (SearchAPI.io) and advanced web scraping",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "mcp-websearch": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "web-search",
+    "web-scraper",
+    "searchapi",
+    "ai-search",
+    "claude",
+    "kiro"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0-rc.12"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
