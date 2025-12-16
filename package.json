@@ -20,11 +20,15 @@
     "claude",
     "kiro"
   ],
-  "author": "",
+  "author": "galangw",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/galangw/mcp-websearch.git"
+  },
+  "homepage": "https://github.com/galangw/mcp-websearch#readme",
+  "bugs": {
+    "url": "https://github.com/galangw/mcp-websearch/issues"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
