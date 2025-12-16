@@ -20,7 +20,7 @@ MCP Server for web search and advanced web scraping. Uses SearchAPI.io for Googl
 }
 ```
 
-### Option 2: HTTP Server
+### Option 2: HTTP Server (Streamable HTTP)
 
 Run as HTTP server:
 ```bash
@@ -32,12 +32,17 @@ Then configure MCP client:
 {
   "mcpServers": {
     "websearch": {
-      "url": "http://localhost:3000/sse",
-      "transport": "sse"
+      "url": "http://localhost:3000/mcp",
+      "transport": "streamable-http"
     }
   }
 }
 ```
+
+The server implements MCP Streamable HTTP transport (spec 2025-03-26) with:
+- Session management with `Mcp-Session-Id` headers
+- SSE streaming for server-initiated messages
+- Resumability support with `Last-Event-ID`
 
 Get your API key at [searchapi.io](https://www.searchapi.io/)
 
