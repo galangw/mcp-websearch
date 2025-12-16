@@ -85,6 +85,32 @@ Get your API key at [searchapi.io](https://www.searchapi.io/)
 - `urls` - Array of URLs (max 5)
 - `max_per_page` - Max content per page (500-5000)
 
+## Deployment
+
+### PM2 (Production)
+
+1. Edit `ecosystem.config.js` and set your `SEARCHAPI_KEY`
+2. Run: `npm run pm2:start`
+3. Check logs: `npm run pm2:logs`
+
+Or manually:
+```bash
+MCP_TRANSPORT=http PORT=3000 SEARCHAPI_KEY=your-key pm2 start index.js --name mcp-websearch
+```
+
+### Docker
+
+```dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --production
+COPY . .
+ENV MCP_TRANSPORT=http PORT=3000
+EXPOSE 3000
+CMD ["node", "index.js"]
+```
+
 ## Roadmap
 
 - [ ] Add Serper.dev provider support

@@ -1,6 +1,6 @@
 {
   "name": "mcp-websearch-server",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "MCP Server for web search (SearchAPI.io) and advanced web scraping",
   "main": "index.js",
   "type": "module",
@@ -9,7 +9,11 @@
   },
   "scripts": {
     "start": "node index.js",
-    "start:http": "MCP_TRANSPORT=http node index.js"
+    "start:http": "MCP_TRANSPORT=http node index.js",
+    "pm2:start": "pm2 start ecosystem.config.js",
+    "pm2:stop": "pm2 stop mcp-websearch",
+    "pm2:restart": "pm2 restart mcp-websearch",
+    "pm2:logs": "pm2 logs mcp-websearch"
   },
   "keywords": [
     "mcp",
