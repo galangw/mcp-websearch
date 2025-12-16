@@ -479,7 +479,33 @@ Limited to 5 URLs to avoid timeout.`,
 
 // ---- start ----
 (async () => {
-  let transport = new StdioServerTransport();
-  await mcp.connect(transport);
-  console.error("websearch mcp ready");
+  const mode = process.env.MCP_TRANSPORT || "stdio";
+  
+  if (mode === "http") {
+    // HTTP mode - for remote access
+    const { SSEServerTransport } = await import("@modelcontextprotocol/sdk/server/sse.js");
+    const express = (await import("express")).default;
+    
+    const app = express();
+    const port = process.env.PORT || 3000;
+    
+    app.get("/sse", async (req, res) => {
+      const transport = new SSEServerTransport("/message", res);
+      await mcp.connect(transport);
+      console.error(`[http] client connected`);
+    });
+    
+    app.post("/message", async (req, res) => {
+      // handled by SSE transport
+    });
+    
+    app.listen(port, () => {
+      console.error(`[http] mcp server running on http://localhost:${port}`);
+    });
+  } else {
+    // stdio mode - default for npx
+    let transport = new StdioServerTransport();
+    await mcp.connect(transport);
+    console.error("[stdio] websearch mcp ready");
+  }
 })();

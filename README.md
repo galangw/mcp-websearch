@@ -4,6 +4,8 @@ MCP Server for web search and advanced web scraping. Uses SearchAPI.io for Googl
 
 ## Quick Start
 
+### Option 1: Stdio (npx)
+
 ```json
 {
   "mcpServers": {
@@ -13,6 +15,25 @@ MCP Server for web search and advanced web scraping. Uses SearchAPI.io for Googl
       "env": {
         "SEARCHAPI_KEY": "your-api-key-here"
       }
+    }
+  }
+}
+```
+
+### Option 2: HTTP Server
+
+Run as HTTP server:
+```bash
+MCP_TRANSPORT=http SEARCHAPI_KEY=your-key PORT=3000 npx mcp-websearch-server
+```
+
+Then configure MCP client:
+```json
+{
+  "mcpServers": {
+    "websearch": {
+      "url": "http://localhost:3000/sse",
+      "transport": "sse"
     }
   }
 }
