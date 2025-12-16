@@ -24,25 +24,48 @@ MCP Server for web search and advanced web scraping. Uses SearchAPI.io for Googl
 
 Run as HTTP server:
 ```bash
-MCP_TRANSPORT=http SEARCHAPI_KEY=your-key PORT=3000 npx mcp-websearch-server
+MCP_TRANSPORT=http PORT=3000 npx mcp-websearch-server
 ```
 
-Then configure MCP client:
+Then configure MCP client with API key in URL or header:
+
+**Option A: API key in URL query parameter**
 ```json
 {
   "mcpServers": {
     "websearch": {
-      "url": "http://localhost:3000/mcp",
+      "url": "http://localhost:3000/mcp?apikey=YOUR_KEY",
       "transport": "streamable-http"
     }
   }
 }
 ```
 
+**Option B: API key in header**
+```json
+{
+  "mcpServers": {
+    "websearch": {
+      "url": "http://localhost:3000/mcp",
+      "transport": "streamable-http",
+      "headers": {
+        "X-API-Key": "YOUR_KEY"
+      }
+    }
+  }
+}
+```
+
+**Option C: Server-side default key**
+```bash
+MCP_TRANSPORT=http SEARCHAPI_KEY=default-key PORT=3000 npx mcp-websearch-server
+```
+
 The server implements MCP Streamable HTTP transport (spec 2025-03-26) with:
 - Session management with `Mcp-Session-Id` headers
 - SSE streaming for server-initiated messages
 - Resumability support with `Last-Event-ID`
+- Per-user API key support via query param or header
 
 Get your API key at [searchapi.io](https://www.searchapi.io/)
 

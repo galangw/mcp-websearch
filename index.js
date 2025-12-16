@@ -493,6 +493,15 @@ if (mode === "http") {
     const port = process.env.PORT || 3000;
     const sessions = {};
 
+    // middleware: extract API key from query/header and set to process.env
+    app.use((req, res, next) => {
+      const apiKey = req.query.apikey || req.headers["x-api-key"];
+      if (apiKey) {
+        req.userApiKey = apiKey;
+      }
+      next();
+    });
+
     // helper: check if request is initialize
     const isInit = (body) => {
       if (Array.isArray(body)) return body.some(m => m.method === "initialize");
@@ -502,6 +511,11 @@ if (mode === "http") {
     // POST /mcp - main endpoint for all JSON-RPC messages
     app.post("/mcp", async (req, res) => {
       const sid = req.headers["mcp-session-id"];
+      
+      // set user's API key if provided
+      if (req.userApiKey) {
+        process.env.SEARCHAPI_KEY = req.userApiKey;
+      }
 
       try {
         let transport;
@@ -556,6 +570,12 @@ if (mode === "http") {
       if (!sid || !sessions[sid]) {
         return res.status(400).send("Invalid session");
       }
+      
+      // set user's API key if provided
+      if (req.userApiKey) {
+        process.env.SEARCHAPI_KEY = req.userApiKey;
+      }
+      
       await sessions[sid].handleRequest(req, res);
     });
 
